@@ -1,6 +1,6 @@
 buildscript {
   // Defined here so that we can use it in the buildscript block
-  project.ext.roboVMVersion = '2.3.6'
+  project.ext.roboVMVersion = '2.3.12'
 
   repositories {
     mavenLocal()
