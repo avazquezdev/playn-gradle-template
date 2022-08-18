@@ -10,7 +10,6 @@ buildscript {
   }
 
   dependencies {
-    classpath "org.wisepersist:gwt-gradle-plugin:1.0.6"
     classpath "com.android.tools.build:gradle:4.0.0"
     classpath "com.mobidevelop.robovm:robovm-gradle-plugin:$roboVMVersion"
   }
@@ -100,36 +99,5 @@ project(":robovm") {
 
   ext {
     mainClassName = "io.playn.template.robovm.TemplateGameRoboVM"
-  }
-}
-
-project(":html") {
-  apply plugin: "gwt"
-  apply plugin: "war"
-
-  sourceCompatibility = 1.7
-
-  dependencies {
-    implementation project(":assets")
-    implementation project(":core")
-    implementation "io.playn:playn-html:$playnVersion"
-    implementation "io.playn:playn-html:$playnVersion:sources"
-    implementation "io.playn:playn-scene:$playnVersion:sources"
-  }
-
-  gwt {
-    gwtVersion="$project.gwtVersion"
-    maxHeapSize="1G"
-    minHeapSize="512M"
-
-    modules "io.playn.template.TemplateGame"
-    devModules "io.playn.template.TemplateGame"
-    // devModules "samskivert.testola.GdxDefinitionSuperdev"
-    // project.webAppDirName = "webapp"
-
-    compiler {
-      strict = true
-      disableCastChecking = true
-    }
   }
 }
