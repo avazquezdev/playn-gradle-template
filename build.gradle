@@ -1,6 +1,6 @@
 buildscript {
   // Defined here so that we can use it in the buildscript block
-  project.ext.roboVMVersion = '2.3.18'
+  project.ext.roboVMVersion = '2.3.21'
 
   repositories {
     mavenLocal()
@@ -27,7 +27,7 @@ allprojects {
 
   ext {
     appName = "playn-gradle-template"
-    playnVersion = "2.0.6"
+    playnVersion = "2.0.8"
   }
 }
 
