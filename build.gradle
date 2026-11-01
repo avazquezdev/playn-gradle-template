@@ -35,6 +35,8 @@ allprojects {
 
 project(":assets") {
   apply plugin: "java"
+
+  sourceCompatibility = 1.7
 }
 
 project(":core") {
