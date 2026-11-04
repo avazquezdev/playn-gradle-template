@@ -1,37 +1,39 @@
 package io.playn.template.robovm;
 
-import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
-import org.robovm.apple.uikit.UIApplication;
-import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
-import org.robovm.apple.uikit.UIApplicationLaunchOptions;
-import org.robovm.apple.uikit.UIInterfaceOrientationMask;
-import org.robovm.apple.uikit.UIScreen;
-import org.robovm.apple.uikit.UIWindow;
+import org.robovm.apple.uikit.*;
+import org.robovm.objc.annotation.CustomClass;
+import org.robovm.rt.bro.annotation.ForceLinkClass;
 
 import playn.robovm.RoboPlatform;
 import io.playn.template.core.TemplateGame;
 
+@ForceLinkClass(TemplateGameRoboVM.SceneDelegate.class)
 public class TemplateGameRoboVM extends UIApplicationDelegateAdapter {
 
   @Override
   public boolean didFinishLaunching (UIApplication app, UIApplicationLaunchOptions launchOpts) {
-    // create a full-screen window
-    CGRect bounds = UIScreen.getMainScreen().getBounds();
-    UIWindow window = new UIWindow(bounds);
-
-    // configure and create the PlayN platform
-    RoboPlatform.Config config = new RoboPlatform.Config();
-    config.orients = UIInterfaceOrientationMask.All;
-    RoboPlatform plat = RoboPlatform.create(window, config);
-
-    // create and initialize our game
-    new TemplateGame(plat);
-
-    // make our main window visible (this starts the platform)
-    window.makeKeyAndVisible();
-    addStrongRef(window);
     return true;
+  }
+
+  @CustomClass(preload = true)
+  public static class SceneDelegate extends UIWindowSceneDelegateAdapter {
+    private UIWindow window;
+
+    @Override
+    public void willConnect(UIScene scene, UISceneSession session,
+                            UISceneConnectionOptions connectionOptions) {
+      if (!(scene instanceof UIWindowScene)) {
+        return;
+      }
+
+      window = new UIWindow((UIWindowScene) scene);
+      RoboPlatform.Config config = new RoboPlatform.Config();
+      config.orients = UIInterfaceOrientationMask.All;
+      RoboPlatform plat = RoboPlatform.create(window, config);
+      new TemplateGame(plat);
+      window.makeKeyAndVisible();
+    }
   }
 
   public static void main (String[] args) {
